@@ -1,0 +1,82 @@
+// ==UserScript==
+// @name         Rata sexy
+// @namespace    http://atelier801.com/new-dialog?ad=Yumalind
+// @include     http://atelier801.com/topic?*
+// @include     http://atelier801.com//topic?*
+// @version      0.1
+// @description  try to take over the world!
+// @author       Yumalind
+// @grant        none
+// @updateURL	https://github.com/Yumalind/ratasexy.git
+// ==/UserScript==
+
+$(document).ready(function(){
+    clauButtons();
+});
+
+function clauButtons() {
+    buttons = [
+        ['Dançando','[img]http://i.imgur.com/vp5N9tt.gif[/img]','',0],
+        ['Chorando','[img]http://img.atelier801.com/d4a4f1b8.gif[/img]','',0],
+        ['Beijo','[img]http://i.imgur.com/eWv1Odz.gif[/img]','',0],
+        ['Parabéns','[img]http://i.imgur.com/spisvvN.gif[/img]','',0],
+        ['Ai que vergonha','[img]http://i.imgur.com/QHg2E4f.gif[/img]','',0],
+        ['Com raiva','[img]http://i.imgur.com/UJU0K84.gif[/img]','',0],
+        ['Sentada','[img]http://i.imgur.com/q8a0wmA.png[/img]','',0],
+        ['Dormindo','[img]http://i.imgur.com/OUrYbLL.gif[/img]','',0],
+        ['Rindo','[img]http://i.imgur.com/A2UrVap.gif[/img]','',0],
+    ];
+    var element = document.getElementById("outils_message_reponse");
+    var BBCodeContainer = document.createElement('div');
+    BBCodeContainer.className = "btn-group groupe-boutons-barre-outils";
+    var BBCodeButton = document.createElement('button');
+    BBCodeButton.className = "btn btn-reduit";
+    BBCodeButton.type = "button";
+    BBCodeButton.innerHTML = "Rata sexy";
+    BBCodeContainer.appendChild(BBCodeButton);
+    var drop = document.createElement('button');
+    drop.className = "btn btn-reduit dropdown-toggle";
+    drop.setAttribute("data-toggle", "dropdown");
+    drop.innerHTML = '<span class="caret"></span>';
+    BBCodeContainer.appendChild(drop);
+    var dropmenu= document.createElement('ul');
+    dropmenu.className = "dropdown-menu" ;
+    var total = '';
+    buttons.forEach(function(value) {
+        var ajouter = "ajouterBBCode('message_reponse', '"+value[1]+"', '"+value[2]+"', " +(value[1].length - value[3])+ ");";
+        total = total + '<li><a class="element-menu-outils" onclick="' +ajouter+ '">'+value[0]+'</a></li>';
+    });
+    dropmenu.innerHTML = total;
+    BBCodeContainer.appendChild(dropmenu);
+    element.insertBefore(BBCodeContainer,element.childNodes[12]);
+    var messageContainer = document.getElementsByClassName("cadre-message");
+    for(var i=0;i<messageContainer.length;i++) {
+        var post = messageContainer[i].querySelectorAll('div[id^="message_"]')[0];
+        if (post) {
+            var postid = post.id.replace('message_','');
+            element = document.getElementById("outils_edit_message_"+postid);
+            BBCodeContainer = document.createElement('div');
+            BBCodeContainer.className = "btn-group groupe-boutons-barre-outils";
+            BBCodeButton = document.createElement('button');
+            BBCodeButton.className = "btn btn-reduit";
+            BBCodeButton.type = "button";
+            BBCodeButton.innerHTML = "Rata sexy";
+            BBCodeContainer.appendChild(BBCodeButton);
+            drop = document.createElement('button');
+            drop.className = "btn btn-reduit dropdown-toggle";
+            drop.setAttribute("data-toggle", "dropdown");
+            drop.innerHTML = '<span class="caret"></span>';
+            BBCodeContainer.appendChild(drop);
+            dropmenu= document.createElement('ul');
+            dropmenu.className = "dropdown-menu" ;
+            total = '';
+            buttons.forEach(function(value) {
+                var ajouter = "ajouterBBCode('edit_message_"+postid+"', '"+value[1]+"', '"+value[2]+"', "+(value[1].length - value[3])+");";
+                total = total + '<li><a class="element-menu-outils" onclick="' +ajouter+ '">'+value[0]+'</a></li>';
+            });
+            dropmenu.innerHTML = total;
+            BBCodeContainer.appendChild(dropmenu);
+            element.insertBefore(BBCodeContainer,element.childNodes[12]);
+        }
+    }
+}
